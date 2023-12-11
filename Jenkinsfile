@@ -12,42 +12,15 @@ pipeline {
                 sh "mvn clean compile"
             }
         }
-        stage('deploy') { 
+        stage('testing') { 
             
             steps {
-                sh "mvn package"
+                sh "mvn test"
             }
         }
-        stage('Build Docker image'){
-          
+        stage('package') { 
             steps {
-                echo "Hello Java Express"
-                sh 'ls'
-                sh 'docker build -t  anvbhaskar/docker_jenkins_springboot:${BUILD_NUMBER} .'
-            }
-        }
-        stage('Docker Login'){
-            
-            steps {
-                 withCredentials([string(credentialsId: 'DockerId', variable: 'Dockerpwd')]) {
-                    sh "docker login -u anvbhaskar -p ${Dockerpwd}"
-                }
-            }                
-        }
-        stage('Docker Push'){
-            steps {
-                sh 'docker push anvbhaskar/docker_jenkins_springboot:${BUILD_NUMBER}'
-            }
-        }
-        stage('Docker deploy'){
-            steps {
-               
-                sh 'docker run -itd -p  8081:8080 anvbhaskar/docker_jenkins_springboot:${BUILD_NUMBER}'
-            }
-        }
-        stage('Archving') { 
-            steps {
-                 archiveArtifacts '**/target/*.jar'
+                 mvn "package"
             }
         }
     }
