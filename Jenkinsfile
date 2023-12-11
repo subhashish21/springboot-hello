@@ -4,7 +4,15 @@ pipeline {
         maven "Mymaven"
     
     }
-    stages {
+
+        stages {
+        stage('Clonerepo') { 
+            steps {
+              
+                git "https://github.com/subhashish21/springboot-hello.git"
+            }
+        }
+            
         stage('Compile and Clean') { 
             steps {
                 // Run Maven on a Unix agent.
