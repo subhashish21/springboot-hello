@@ -1,7 +1,7 @@
 pipeline {
     agent any 
     tools {
-        maven "Mymaven"
+        maven 'Mymaven'
     
     }
 
@@ -16,18 +16,18 @@ pipeline {
         stage('Compile') { 
             steps{
               
-                sh "mvn  compile"
+                sh 'mvn  compile'
             }
         }
         stage('testing') { 
             
             steps {
-                sh "mvn test"
+                sh 'mvn test'
             }
         }
         stage('package') { 
             steps {
-                 mvn "package"
+                 mvn 'package'
             }
         }
     }
